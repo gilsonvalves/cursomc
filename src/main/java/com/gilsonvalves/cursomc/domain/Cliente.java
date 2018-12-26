@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.springframework.boot.autoconfigure.cache.CacheType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gilsonvalves.cursomc.domain.enums.TipoCliente;
@@ -31,7 +34,7 @@ public class Cliente implements Serializable {
 	private Integer tipo;
 	
 	
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy="cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
@@ -53,7 +56,7 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getcod();
+		this.tipo = (tipo==null) ? null: tipo.getcod();
 	}
 	
 	
